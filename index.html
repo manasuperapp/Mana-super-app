@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="te">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#123b70">
+<meta name="description" content="Mana Super App - Local services for Bhadradri Kothagudem">
+<link rel="manifest" href="manifest.json">
+<title>Mana Super App</title>
+<style>
+:root{--navy:#123b70;--blue:#1765ad;--pale:#edf4fc;--ink:#18324e;--muted:#65758a;--line:#dce6f1;--white:#fff;--green:#16834a}
+*{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Telugu",sans-serif}
+header{background:linear-gradient(135deg,#123b70,#1d69ae);color:white;padding:18px 16px 20px;border-radius:0 0 22px 22px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand{font-weight:900;font-size:24px;letter-spacing:1px}.tag{font-size:10px;border:1px solid #ffffff77;padding:5px 8px;border-radius:20px}
+header h1{font-size:20px;margin:15px 0 4px}header p{margin:0;color:#dceaff;font-size:13px}
+main{max-width:760px;margin:auto;padding:14px 14px 90px}.toolbar{display:flex;gap:8px;align-items:center;margin:0 0 14px}
+select,input,textarea{font:inherit;border:1px solid var(--line);border-radius:11px;padding:11px;background:white;color:var(--ink);width:100%;min-width:0}
+.toolbar select{width:auto;max-width:48%}.toolbar .loc{flex:1;font-size:12px;color:var(--muted);background:white;padding:11px;border:1px solid var(--line);border-radius:11px}
+h2{font-size:18px;margin:18px 0 10px}.sub{font-size:12px;color:var(--muted);margin-top:-6px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.service{background:white;border:1px solid var(--line);border-radius:16px;padding:14px 7px;text-align:center;cursor:pointer;box-shadow:0 2px 8px #173d6508}
+.service:active{transform:scale(.98)}.emoji{font-size:26px;display:block;margin-bottom:5px}.service b{font-size:12px;display:block}.service small{font-size:10px;color:var(--muted)}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0;box-shadow:0 3px 12px #173d6508}
+.row{display:flex;gap:10px;align-items:center}.between{justify-content:space-between}.grow{flex:1;min-width:0}
+button{border:0;border-radius:11px;background:var(--blue);color:white;padding:11px 14px;font:inherit;font-weight:700;cursor:pointer}
+button.secondary{background:var(--pale);color:var(--navy)}button.danger{background:#fff0f0;color:#b42318}button.small{padding:8px 10px;font-size:12px}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;gap:8px;padding:9px 10px calc(9px + env(safe-area-inset-bottom));z-index:5}
+.tabs button{flex:1;max-width:180px;padding:10px 4px;background:#f0f4fa;color:var(--navy);font-size:12px}
+.tabs button.active{background:var(--navy);color:white}
+.hidden{display:none!important}.pill{font-size:11px;padding:5px 8px;background:#eaf3ff;color:#15528e;border-radius:20px;white-space:nowrap}
+.muted{color:var(--muted);font-size:12px}.price{font-weight:800;color:var(--navy)}
+label{display:block;font-size:12px;font-weight:700;margin:10px 0 5px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.full{grid-column:1/-1}
+.notice{background:#fff8e6;border:1px solid #f2dfad;color:#77570a;border-radius:12px;padding:11px;font-size:12px;line-height:1.5}
+.empty{text-align:center;color:var(--muted);padding:25px 8px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.kpi{background:#edf4fc;border-radius:12px;padding:12px 8px}.kpi strong{display:block;font-size:21px;color:var(--navy)}.kpi span{font-size:10px;color:var(--muted)}
+footer{text-align:center;color:#8492a3;font-size:10px;margin:25px 0}
+@media(min-width:600px){.grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top"><div class="brand">MANA <span style="font-weight:500">SUPER APP</span></div><span class="tag">LOCAL SERVICES</span></div>
+ <h1 id="heroTitle">మన సేవలు.. మన చేతుల్లోనే!</h1>
+ <p>Bhadradri Kothagudem District · Telugu + English</p>
+</header>
+<main>
+ <div class="toolbar">
+  <select id="lang" aria-label="Language"><option value="te">తెలుగు</option><option value="en">English</option></select>
+  <div class="loc">📍 <span id="areaText">భద్రాద్రి కొత్తగూడెం జిల్లా</span></div>
+ </div>
+
+ <section id="customer">
+  <div class="row between"><div><h2 id="servicesTitle">మీకు ఏ సేవ కావాలి?</h2><div class="sub" id="servicesSub">ఒక సేవను ఎంచుకొని బుకింగ్ చేయండి</div></div><span class="pill">LOCAL</span></div>
+  <div class="grid" id="serviceGrid"></div>
+  <h2 id="bookingTitle">కొత్త బుకింగ్</h2>
+  <div class="card">
+   <form id="bookingForm">
+    <label id="lblService">సేవ</label><select id="serviceSelect" required></select>
+    <div class="formgrid">
+     <div><label id="lblName">మీ పేరు</label><input id="custName" required placeholder="పేరు / Name"></div>
+     <div><label id="lblPhone">మొబైల్ నంబర్</label><input id="custPhone" required inputmode="tel" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit number"></div>
+     <div class="full"><label id="lblAddress">పికప్ / డెలివరీ చిరునామా</label><textarea id="custAddress" required rows="2" placeholder="కాలనీ, వీధి, ప్రాంతం"></textarea></div>
+     <div class="full"><label id="lblNotes">అవసర వివరాలు</label><input id="custNotes" placeholder="ఉదా: ఎక్కడికి వెళ్లాలి / ఏమి కావాలి"></div>
+    </div>
+    <button style="width:100%;margin-top:13px" id="bookBtn">బుకింగ్ చేయండి</button>
+   </form>
+  </div>
+  <h2 id="myOrdersTitle">నా బుకింగ్‌లు</h2>
+  <div id="customerOrders"></div>
+ </section>
+
+ <section id="partner" class="hidden">
+  <h2 id="partnerTitle">పార్ట్‌నర్ డాష్‌బోర్డ్</h2>
+  <div class="notice" id="partnerNotice">ఇది డెమో పార్ట్‌నర్ స్క్రీన్. ఇక్కడ కనిపించే ఆర్డర్లు ఈ మొబైల్‌లోని డెమో డేటా మాత్రమే.</div>
+  <div class="card">
+   <label id="partnerNameLabel">పార్ట్‌నర్ పేరు</label><input id="partnerName" placeholder="మీ పేరు / వ్యాపారం">
+   <label id="partnerTypeLabel">మీ సేవ</label><select id="partnerType"></select>
+   <button style="width:100%;margin-top:12px" id="savePartner">పార్ట్‌నర్ వివరాలు సేవ్ చేయండి</button>
+  </div>
+  <h2 id="availableTitle">ఆర్డర్లు</h2><div id="partnerOrders"></div>
+ </section>
+
+ <section id="admin" class="hidden">
+  <h2 id="adminTitle">అడ్మిన్ ప్యానెల్</h2>
+  <div class="notice" id="adminNotice">డెమో అడ్మిన్ ప్యానెల్. ఈ వెర్షన్‌కు ప్రత్యేక సర్వర్ లాగిన్ లేదు; మీ ఫోన్‌లో మాత్రమే డేటా ఉంటుంది. పబ్లిక్‌గా ఉపయోగించే ముందు సురక్షిత అడ్మిన్ లాగిన్ తప్పనిసరి.</div>
+  <div class="kpis" style="margin:12px 0">
+   <div class="kpi"><strong id="totalOrders">0</strong><span id="ordersKpi">మొత్తం బుకింగ్‌లు</span></div>
+   <div class="kpi"><strong id="pendingOrders">0</strong><span id="pendingKpi">పెండింగ్</span></div>
+   <div class="kpi"><strong id="doneOrders">0</strong><span id="doneKpi">పూర్తి</span></div>
+  </div>
+  <div class="row between"><h2 id="allOrdersTitle">అన్ని బుకింగ్‌లు</h2><button class="secondary small" id="exportBtn">Export CSV</button></div>
+  <div id="adminOrders"></div>
+  <button class="danger" style="width:100%;margin-top:15px" id="clearBtn">డెమో డేటా మొత్తం తొలగించు</button>
+ </section>
+ <footer>Mana Super App · Free Demo Prototype · Version 1.0</footer>
+</main>
+<nav class="tabs">
+ <button class="active" data-tab="customer">🏠 <span id="tabCustomer">కస్టమర్</span></button>
+ <button data-tab="partner">🛵 <span id="tabPartner">పార్ట్‌నర్</span></button>
+ <button data-tab="admin">⚙️ <span id="tabAdmin">అడ్మిన్</span></button>
+</nav>
+<script>
+const services=[
+ {id:"ride",icon:"🛵",te:"బైక్ / ఆటో",en:"Bike / Auto"},
+ {id:"cab",icon:"🚕",te:"క్యాబ్ / ట్రావెల్",en:"Cab / Travel"},
+ {id:"food",icon:"🍱",te:"ఫుడ్ డెలివరీ",en:"Food Delivery"},
+ {id:"grocery",icon:"🛒",te:"కిరాణా",en:"Grocery"},
+ {id:"vegetables",icon:"🥬",te:"కూరగాయలు",en:"Vegetables"},
+ {id:"parcel",icon:"📦",te:"పార్సిల్",en:"Parcel Delivery"},
+ {id:"medicine",icon:"💊",te:"మెడిసిన్",en:"Medicine"},
+ {id:"electrician",icon:"💡",te:"ఎలక్ట్రీషియన్",en:"Electrician"},
+ {id:"plumber",icon:"🔧",te:"ప్లంబర్",en:"Plumber"},
+ {id:"cleaning",icon:"🧹",te:"క్లీనింగ్",en:"Cleaning"},
+ {id:"beauty",icon:"💇",te:"బ్యూటీ / సెలూన్",en:"Beauty / Salon"},
+ {id:"laundry",icon:"👕",te:"లాండ్రీ",en:"Laundry"},
+ {id:"photography",icon:"📸",te:"ఫోటోగ్రఫీ",en:"Photography"},
+ {id:"other",icon:"➕",te:"ఇతర సేవలు",en:"Other Services"}
+];
+const words={
+ te:{services:"మీకు ఏ సేవ కావాలి?",sub:"ఒక సేవను ఎంచుకొని బుకింగ్ చేయండి",booking:"కొత్త బుకింగ్",service:"సేవ",name:"మీ పేరు",phone:"మొబైల్ నంబర్",address:"పికప్ / డెలివరీ చిరునామా",notes:"అవసర వివరాలు",book:"బుకింగ్ చేయండి",my:"నా బుకింగ్‌లు",partner:"పార్ట్‌నర్ డాష్‌బోర్డ్",partnerNotice:"ఇది డెమో పార్ట్‌నర్ స్క్రీన్. ఇక్కడ కనిపించే ఆర్డర్లు ఈ మొబైల్‌లోని డెమో డేటా మాత్రమే.",pname:"పార్ట్‌నర్ పేరు",ptype:"మీ సేవ",save:"పార్ట్‌నర్ వివరాలు సేవ్ చేయండి",available:"ఆర్డర్లు",admin:"అడ్మిన్ ప్యానెల్",adminNotice:"డెమో అడ్మిన్ ప్యానెల్. ఈ వెర్షన్‌కు ప్రత్యేక సర్వర్ లాగిన్ లేదు; మీ ఫోన్‌లో మాత్రమే డేటా ఉంటుంది. పబ్లిక్‌గా ఉపయోగించే ముందు సురక్షిత అడ్మిన్ లాగిన్ తప్పనిసరి.",all:"అన్ని బుకింగ్‌లు",total:"మొత్తం బుకింగ్‌లు",pending:"పెండింగ్",done:"పూర్తి",customer:"కస్టమర్",partnerTab:"పార్ట్‌నర్",adminTab:"అడ్మిన్",empty:"ఇంకా బుకింగ్‌లు లేవు",accept:"అంగీకరించు",complete:"పూర్తి చేయి",cancel:"రద్దు",status:{new:"కొత్తది",accepted:"అంగీకరించబడింది",done:"పూర్తయింది",cancelled:"రద్దు"} ,success:"మీ బుకింగ్ నమోదు అయింది. ఇది డెమో బుకింగ్ మాత్రమే.",clear:"డెమో డేటా మొత్తం తొలగించు",confirm:"డెమో డేటా మొత్తం తొలగించాలా?"},
+ en:{services:"What service do you need?",sub:"Choose a service and place a booking",booking:"New Booking",service:"Service",name:"Your name",phone:"Mobile number",address:"Pickup / delivery address",notes:"Request details",book:"Place Booking",my:"My Bookings",partner:"Partner Dashboard",partnerNotice:"Demo partner screen. Orders shown here are demo data stored on this device only.",pname:"Partner name",ptype:"Your service",save:"Save partner details",available:"Orders",admin:"Admin Panel",adminNotice:"Demo admin panel. There is no secure server login in this version; data stays on this device. Secure admin authentication is required before public use.",all:"All Bookings",total:"Total bookings",pending:"Pending",done:"Completed",customer:"Customer",partnerTab:"Partner",adminTab:"Admin",empty:"No bookings yet",accept:"Accept",complete:"Complete",cancel:"Cancel",status:{new:"New",accepted:"Accepted",done:"Completed",cancelled:"Cancelled"},success:"Your booking has been saved. This is a demo booking only.",clear:"Clear all demo data",confirm:"Delete all demo data?"}
+};
+let lang="te", orders=JSON.parse(localStorage.getItem("mana_orders")||"[]"), partner=JSON.parse(localStorage.getItem("mana_partner")||"{}");
+const $=id=>document.getElementById(id);
+function t(k){return words[lang][k]}
+function serviceName(id){let s=services.find(x=>x.id===id);return s?(lang==="te"?s.te:s.en):id}
+function save(){localStorage.setItem("mana_orders",JSON.stringify(orders));localStorage.setItem("mana_partner",JSON.stringify(partner));render()}
+function renderServices(){
+ $("serviceGrid").innerHTML=services.map(s=>`<div class="service" data-service="${s.id}"><span class="emoji">${s.icon}</span><b>${lang==="te"?s.te:s.en}</b><small>${lang==="te"?"బుక్ చేయండి":"Book now"}</small></div>`).join("");
+ $("serviceSelect").innerHTML=services.map(s=>`<option value="${s.id}">${lang==="te"?s.te:s.en}</option>`).join("");
+ $("partnerType").innerHTML=services.map(s=>`<option value="${s.id}">${lang==="te"?s.te:s.en}</option>`).join("");
+ document.querySelectorAll("[data-service]").forEach(el=>el.onclick=()=>{$("serviceSelect").value=el.dataset.service;$("bookingForm").scrollIntoView({behavior:"smooth",block:"center"})});
+}
+function orderCard(o,mode){
+ const status=t("status")[o.status]||o.status;
+ let buttons="";
+ if(mode==="partner" && o.status==="new") buttons=`<button class="small" onclick="changeStatus('${o.id}','accepted')">${t("accept")}</button>`;
+ if((mode==="partner"||mode==="admin") && o.status==="accepted") buttons=`<button class="small" onclick="changeStatus('${o.id}','done')">${t("complete")}</button>`;
+ if(mode==="admin" && !["done","cancelled"].includes(o.status)) buttons+=` <button class="danger small" onclick="changeStatus('${o.id}','cancelled')">${t("cancel")}</button>`;
+ return `<div class="card"><div class="row between"><b>${serviceName(o.service)}</b><span class="pill">${status}</span></div><p style="margin:8px 0 4px"><b>${esc(o.name)}</b> · ${esc(o.phone)}</p><div class="muted">📍 ${esc(o.address)}</div>${o.notes?`<div class="muted" style="margin-top:5px">📝 ${esc(o.notes)}</div>`:""}<div class="muted" style="margin-top:7px">${new Date(o.created).toLocaleString()}</div>${buttons?`<div style="margin-top:10px">${buttons}</div>`:""}</div>`;
+}
+function esc(v){return String(v||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function render(){
+ $("customerOrders").innerHTML=orders.length?orders.slice().reverse().map(o=>orderCard(o,"customer")).join(""):`<div class="empty">${t("empty")}</div>`;
+ let matching=orders.filter(o=>!partner.type||o.service===partner.type);
+ $("partnerOrders").innerHTML=matching.length?matching.slice().reverse().map(o=>orderCard(o,"partner")).join(""):`<div class="empty">${t("empty")}</div>`;
+ $("adminOrders").innerHTML=orders.length?orders.slice().reverse().map(o=>orderCard(o,"admin")).join(""):`<div class="empty">${t("empty")}</div>`;
+ $("totalOrders").textContent=orders.length;$("pendingOrders").textContent=orders.filter(o=>o.status==="new"||o.status==="accepted").length;$("doneOrders").textContent=orders.filter(o=>o.status==="done").length;
+ $("partnerName").value=partner.name||"";if(partner.type)$("partnerType").value=partner.type;
+}
+window.changeStatus=(id,status)=>{orders=orders.map(o=>o.id===id?{...o,status}:o);save()};
+$("bookingForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const o={id:"MNA"+Date.now(),service:$("serviceSelect").value,name:$("custName").value.trim(),phone:$("custPhone").value.trim(),address:$("custAddress").value.trim(),notes:$("custNotes").value.trim(),status:"new",created:new Date().toISOString()};
+ orders.push(o);save();e.target.reset();alert(t("success"));
+});
+$("savePartner").onclick=()=>{partner={name:$("partnerName").value.trim(),type:$("partnerType").value};save();alert(lang==="te"?"పార్ట్‌నర్ వివరాలు సేవ్ అయ్యాయి":"Partner details saved")};
+$("exportBtn").onclick=()=>{
+ const rows=[["ID","Service","Name","Phone","Address","Notes","Status","Created"],...orders.map(o=>[o.id,serviceName(o.service),o.name,o.phone,o.address,o.notes,o.status,o.created])];
+ const csv=rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\n");
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}));a.download="mana-bookings.csv";a.click();URL.revokeObjectURL(a.href);
+};
+$("clearBtn").onclick=()=>{if(confirm(t("confirm"))){orders=[];partner={};save()}};
+function setLang(v){
+ lang=v;const map={servicesTitle:"services",servicesSub:"sub",bookingTitle:"booking",lblService:"service",lblName:"name",lblPhone:"phone",lblAddress:"address",lblNotes:"notes",bookBtn:"book",myOrdersTitle:"my",partnerTitle:"partner",partnerNotice:"partnerNotice",partnerNameLabel:"pname",partnerTypeLabel:"ptype",savePartner:"save",availableTitle:"available",adminTitle:"admin",adminNotice:"adminNotice",allOrdersTitle:"all",ordersKpi:"total",pendingKpi:"pending",doneKpi:"done",tabCustomer:"customer",tabPartner:"partnerTab",tabAdmin:"adminTab",clearBtn:"clear"};
+ Object.entries(map).forEach(([id,k])=>$(id).textContent=t(k));
+ $("heroTitle").textContent=lang==="te"?"మన సేవలు.. మన చేతుల్లోనే!":"Your Local Services, All in One App";
+ $("areaText").textContent=lang==="te"?"భద్రాద్రి కొత్తగూడెం జిల్లా":"Bhadradri Kothagudem District";
+ renderServices();render();
+}
+$("lang").onchange=e=>setLang(e.target.value);
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{
+ document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("active",x===b));
+ ["customer","partner","admin"].forEach(id=>$(id).classList.toggle("hidden",id!==b.dataset.tab));
+});
+setLang("te");
+if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script>
+</body></html>
